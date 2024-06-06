@@ -1,17 +1,11 @@
-# Concept Sliders
-###  [Project Website](https://sliders.baulab.info) | [Arxiv Preprint](https://arxiv.org/pdf/2311.12092.pdf) | [Trained Sliders](https://sliders.baulab.info/weights/xl_sliders/) | [Colab Demo](https://colab.research.google.com/github/rohitgandikota/sliders/blob/main/demo_concept_sliders.ipynb) | [Huggingface Demo](https://huggingface.co/spaces/baulab/ConceptSliders) <br>
-Official code implementation of "Concept Sliders: LoRA Adaptors for Precise Control in Diffusion Models"
+# Controlling Lighting with LoRA Adaptors
+Computer Vision 2 project: Group 3 \
+| Nimi Barazani | Martijn van Raaphorst | Lars de Wolf | Simon Hüsgen | Yigit Özkaya | Loong Li |
+
 
 <div align='center'>
 <img src = 'images/main_figure.png'>
 </div>
-
-## Colab Demo
-Try out our colab demo here [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rohitgandikota/sliders/blob/main/demo_concept_sliders.ipynb)
-
-## UPDATE
-You can now use GPT-4 (or any other openAI model) to create prompts for your text sliders. All you need to do is describe what slider you want to create (e.g: "i want to make people look happy"). <br>
-Please refer to the [GPT-notebook](https://github.com/rohitgandikota/sliders/blob/main/GPT_prompt_helper.ipynb)
 
 ## Setup
 To set up your python environment:
@@ -19,11 +13,16 @@ To set up your python environment:
 conda create -n sliders python=3.9
 conda activate sliders
 
-git  clone https://github.com/rohitgandikota/sliders.git
+git  clone https://github.com/LarsdeWolf/CV2-Sliders.git
 cd sliders
 pip install -r requirements.txt
 ```
-If you are running on Windows - please refer to these Windows setup guidelines [here](https://github.com/rohitgandikota/sliders/issues/27#issuecomment-1833572579)
+
+## Gradio Demo
+We present our trained concept sliders in a demo using Gradio, which can be runned locally, or using Google Colab. To run our demo locally, ensure the requirements are installed and simply execute DEMO/GradioDemo.py. To use our Colab demo, execute the cells in DEMO/LoraSliderColabDemo.ipynb. 
+Both versions use SDXL-Turbo as base model, ensuring high quality image generation at significantly lower inference steps compared to SDXL.     
+
+
 ## Textual Concept Sliders
 ### Training SD-1.x and SD-2.x LoRa
 To train an age slider - go to `train-scripts/textsliders/data/prompts.yaml` and edit the `target=person` and `positive=old person` and `unconditional=young person` (opposite of positive) and `neutral=person` and `action=enhance` with `guidance=4`. <br>
@@ -69,28 +68,3 @@ To train image sliders for SD-XL, use the script `train-lora-scale-xl.py`. The s
 python trainscripts/imagesliders/train_lora-scale-xl.py --name 'eyesliderXL' --rank 4 --alpha 1 --config_file 'trainscripts/imagesliders/data/config-xl.yaml' --folder_main '/share/u/rohit/imageXLdataset/eyesize_data/'
 ```
 
-## Editing Real Images
-Concept sliders can be used to edit real images. We use null inversion to edit the images - instead of prompt, we use sliders! <br>
-Checkout - `demo_image_editing.ipynb` for mode details.
-
-## Running Gradio Demo Locally
-You can also run the HF hosted gradio slider tool (huge shoutout to gradio and HF team) locally using the following scripts
-```
-git lfs install
-git clone https://huggingface.co/spaces/baulab/ConceptSliders
-cd ConceptSliders
-pip install requirements.txt
-python app.py
-```
-For more inference time gradio demos please refer to Cameduru's repo [here](https://github.com/camenduru/sliders-colab)
-
-## Citing our work
-The preprint can be cited as follows
-```
-@article{gandikota2023sliders,
-  title={Concept Sliders: LoRA Adaptors for Precise Control in Diffusion Models},
-  author={Rohit Gandikota and Joanna Materzy\'nska and Tingrui Zhou and Antonio Torralba and David Bau},
-  journal={arXiv preprint arXiv:2311.12092},
-  year={2023}
-}
-```
