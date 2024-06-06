@@ -76,6 +76,30 @@ neutral: "light"
 python trainscripts/imagesliders/train_lora_scale_xl.py --name 'light_slider_XL' --rank 4 --alpha 1 --config_file 'trainscripts/imagesliders/data/config-xl.yaml' --folder_main 'datasets/lighting/' --folders 'light_right, light_left' --scales '1, -1'
 ```
 
+To train a lens flare concept slider:
+
+1. Create and organize your dataset: 
+* Download the Flare7K and Flickr24K datasets from [here](https://drive.google.com/file/d/1PPXWxn7gYvqwHX301SuWmjI7IUUtqxab/view) and [here](https://drive.google.com/file/d/1GNFGWfUbgXfELx5fZtjTjU2qqWnEa-Lr/view), and place them in the `dataset` folder.
+* Install flare requirements from [requirements-flare.txt](dataset%2Frequirements-flare.txt)
+* Run `dataset/generate_dataset.py <amount> <strenghts> <output_dir>`
+* E.g. `python generate_dataset.py 15000 [0, 0.2, 0.4, 0.6, 0.8, 1.0] datasets/flare`
+* The dataset will be saved in <output_dir>, containing folders for each strength in < strenghts >
+
+2. Edit the configuration file `train-scripts/imagesliders/data/config.yaml`:
+```
+target: "image"
+positive: "image with no lens flare"
+unconditional: "image with lens flare"
+neutral: "image"
+```
+
+3. Run the training script:
+```
+python trainscripts/imagesliders/train_lora_scale_xl.py --name 'Flare_slider_XL' --rank 4 --alpha 1 --config_file 'trainscripts/imagesliders/data/config-xl.yaml' --folder_main 'datasets/flare' --folders '0, 0.25, 0.5, 0.75, 1.0' --scales '2, 1, 0, -1, -2'
+```
+
+
+
 ## Citing the original work
 The preprint can be cited as follows
 ```
