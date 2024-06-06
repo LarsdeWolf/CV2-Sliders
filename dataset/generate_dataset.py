@@ -3,7 +3,7 @@ import torchvision.transforms as transforms
 import torchvision.transforms.functional as TF
 import numpy as np
 import argparse
-from Generate_flare_on_light.data_loader_loc import Flare_Image_Loader
+from data_loader_loc import Flare_Image_Loader
 from torchvision.utils import save_image
 from pathlib import Path
 
