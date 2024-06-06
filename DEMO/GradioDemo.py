@@ -2,7 +2,6 @@ import gradio as gr
 import matplotlib.pyplot as plt
 import torch
 import os
-# from demo_utils import call,  DEFAULT_TARGET_REPLACE, UNET_TARGET_REPLACE_MODULE_CONV, LoRANetwork
 from diffusers import (
     DDPMScheduler,
     DDIMScheduler,
@@ -18,36 +17,10 @@ from diffusers.pipelines import StableDiffusionXLPipeline
 StableDiffusionXLPipeline.__call__ = call
 
 model_map = {
-    'Brightness Visual' : 'models/brightness-visualslider.pt',
-    'Flare Visual' : 'models/flare-visualslider.pt',
-    'Age Text':'models/age-textslider.pt' ,
-    'Brightness Text': 'models/brightness-textslider.pt',
-    # Paper Models
-    # 'Age': 'models/age.pt',
-    # 'Chubby': 'models/chubby.pt',
-    # 'Muscular': 'models/muscular.pt',
-    # 'Surprised Look': 'models/suprised_look.pt',
-    # 'Smiling': 'models/smiling.pt',
-    # 'Professional': 'models/professional.pt',
-    # 'Long Hair': 'models/long_hair.pt',
-    # 'Curly Hair': 'models/curlyhair.pt',
-
-    # 'Pixar Style': 'models/pixar_style.pt',
-    # 'Sculpture Style': 'models/sculpture_style.pt',
-    # 'Clay Style': 'models/clay_style.pt',
-
-    # 'Repair Images': 'models/repair_slider.pt',
-    # 'Fix Hands': 'models/fix_hands.pt',
-
-    # 'Cluttered Room': 'models/cluttered_room.pt',
-
-    # 'Dark Weather': 'models/dark_weather.pt',
-    # 'Festive': 'models/festive.pt',
-    # 'Tropical Weather': 'models/tropical_weather.pt',
-    # 'Winter Weather': 'models/winter_weather.pt',
-
-    # 'Wavy Eyebrows': 'models/eyebrow.pt',
-    # 'Small Eyes (use scales -3, -1, 1, 3)': 'models/eyesize.pt',
+    'Brightness Visual': '../models/brightness-visualslider.pt',
+    'Flare Visual': '../models/flare-visualslider.pt',
+    'Age Text': '../models/age-textslider.pt' ,
+    'Brightness Text': '../models/brightness-textslider.pt',
 }
 
 
@@ -59,13 +32,6 @@ class Demo:
         self.generating = False
         self.device = 'cuda'
         self.weight_dtype = torch.float16
-
-        # # Use SDXL Normal
-        # model_id = 'stabilityai/stable-diffusion-xl-base-1.0'
-        # pipe = StableDiffusionXLPipeline.from_pretrained(model_id, torch_dtype=self.weight_dtype).to(self.device)
-        # pipe = None
-        # del pipe
-        # torch.cuda.empty_cache()
 
         model_id = "stabilityai/sdxl-turbo"
         self.current_model = 'SDXL Turbo'
@@ -83,7 +49,6 @@ class Demo:
             demo.queue(max_size=5).launch(share=True, max_threads=2, debug=True)
 
     def layout(self):
-
         with gr.Row():
             with gr.Tab("Inference") as inference_column:
                 with gr.Row():
@@ -143,12 +108,6 @@ class Demo:
                             interactive=True
                         )
 
-                    # with gr.Column(scale=2):
-                    #     self.result_button = gr.Button(
-                    #         value='Generate Results',
-                    #         interactive=True
-                    #     )
-
                         with gr.Row():
                             self.image_orig = gr.Image(
                                 label="Original SD",
@@ -196,16 +155,6 @@ class Demo:
                self.image_orig]
            )
 
-        # self.result_button.click(self.inference_results, inputs=[
-        #     self.prompt_input_infr,
-        #     self.seed_infr,
-        #     self.slider_scale_infsteps,
-        #     self.start_noise_infr,
-        #     self.slider_scale_infr,
-        #     self.model_dropdown,
-        # ], outputs=None)
-
-
     def clear_galery(self):
       images = []
       self.prompts = set()
@@ -244,14 +193,7 @@ class Demo:
                 self.guidance_scale = 1
                 self.num_inference_steps = inf_steps
                 self.current_model = 'SDXL Turbo'
-            # else:
-            #     model_id = 'stabilityai/stable-diffusion-xl-base-1.0'
-            #     self.pipe = StableDiffusionXLPipeline.from_pretrained(model_id, torch_dtype=self.weight_dtype).to(
-            #         self.device)
-            #     self.pipe.enable_xformers_memory_efficient_attention()
-            #     self.guidance_scale = 7.5
-            #     self.num_inference_steps = 20
-            #     self.current_model = 'SDXL'
+
         generator = torch.manual_seed(seed)
         self.num_inference_steps = inf_steps
         model_path = model_map[model_name]
@@ -309,7 +251,6 @@ class Demo:
         self.generated_images.append((edited_image, f"[edited scale: {scale}] {prompt}"))
 
         return edited_image, original_image
-
 
 demo = Demo()
 
