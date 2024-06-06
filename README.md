@@ -38,10 +38,6 @@ python trainscripts/textsliders/train_lora.py --attributes 'male, female' --name
 `--attributes` argument is used to disentangle concepts from the slider. For instance age slider makes all old people male (so instead add the `"female, male"` attributes to allow disentanglement)
 
 
-#### Evaluate 
-To evaluate your trained models use the notebook `SD1-sliders-inference.ipynb`
-
-
 ### Training SD-XL
 To train a lighting slider, you need to modify the configuration file to specify the target and the lighting conditions. For example, to train a light direction slider:
 1. Edit the configuration file `train-scripts/textsliders/data/prompts.yaml`:
