@@ -4,7 +4,7 @@ Computer Vision 2 project: Group 3 \
 
 
 <div align='center'>
-<img src = 'images/main_figure.png'>
+<img src = 'images/githubcv2.png'>
 </div>
 
 ## Setup
